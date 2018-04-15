@@ -1,0 +1,29 @@
+
+//-------------------- public functions -------------------------------------
+/*! \fn          void DATA_CheckDataChanged(void)
+ *  \brief       Check the data changed status and change the buffer
+ *               TODO: consider the synchronization issue
+ *  \param       None
+ *  \return      None
+ */
+void DATA_CheckDataChanged(void)
+{
+   if(DBP_GetDbChangeFlag())
+   {
+      ENTER_CRITICAL();
+      ge_u8ActiveBuf ^= 0x01;
+      ge_u8EditBuf = ge_u8ActiveBuf ^ 0x01;
+      EXIT_CRITICAL();
+
+      DBP_ResetDbChangeFlag();
+   }
+}
+
+//-------------------- private functions ------------------------------------
+/*! \fn			void function(UNSIGNED32 u32Param1)
+ *  \brief 		Description of this function
+ *  \param 		param1: Description of parameter
+ *  \param 		param2: Description of parameter
+ *  \exception (None non-reentrant code)
+ *  \return 	TRUE: success FALSE: unsuccess
+ */
